@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>tests11</title>
   <!-- Modern font: Poppins -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- If you want to use the image as a favicon or hero image, use <img> or update CSS instead. -->
+  <!-- <link href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHv3tUpTOR_MY8MU_JmyEiQDNIM5qIjqpFqg&s" rel="stylesheet"> -->
   <style>
     :root {
       --navy: #192447;
@@ -100,7 +101,7 @@
     }
     .hero {
       min-height: 75vh;
-      background: linear-gradient(120deg,rgba(24,38,66,0.80) 0%,rgba(24,38,66,0.56) 60%,rgba(241,212,127,0.10) 100%), url('https://thumbs.dreamstime.com/b/happy-friendly-multiracial-team-laughing-working-together-corporate-briefing-business-gathered-table-cheerful-diverse-office-155751228.jpg') center/cover no-repeat;
+      background: linear-gradient(120deg,rgba(24,38,66,0.80) 0%,rgba(24,38,66,0.56) 60%,rgba(241,212,127,0.10) 100%), url('https://pennschool.edu.vn/wp-content/uploads/2022/06/Thumbnail-7.jpg') center/cover no-repeat;
       color: white;
       display: flex;
       flex-direction: column;
@@ -118,13 +119,15 @@
       margin-bottom: 20px;
       font-weight: 700;
       letter-spacing: 0.01em;
-      text-shadow: 0 4px 24px rgba(24,38,66,0.23);
+      color: #FFD87A;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
       opacity: 0;
       animation: fadeInUp 1.1s cubic-bezier(.5,.3,.4,1.1) 0.3s forwards;
     }
     .hero p {
       font-size: 1.36rem;
       color: #fffbe9;
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
       opacity: 0;
       font-weight: 500;
       margin-bottom: 0;
@@ -362,6 +365,20 @@
       color: var(--navy);
       vertical-align: middle;
     }
+    .card input[type="text"] {
+      border: 1.5px solid var(--input-border, #ddd);
+      border-radius: 8px;
+      padding: 8px 10px;
+      background: #f9f9fc;
+      font-size: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .card input[type="text"]:focus {
+      border-color: var(--gold);
+      background: #fffbe9;
+      box-shadow: 0 0 0 2px rgba(209, 162, 74, 0.25);
+      outline: none;
+    }
     .card button.delete-image {
       display: inline-block;
       margin-left: 10px;
@@ -539,6 +556,7 @@
   <div class="hero" id="home">
     <h2>Voices of Success: Inspiring Lives, Powerful Stories</h2>
     <p>Theme: Success through Passion and Purpose</p>
+    <p>Stage 11 - Writing a formal blog post</p>
   </div>
 
   <!-- Home Overview -->
@@ -558,25 +576,25 @@
     <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 28px; text-align: center;">
       <!-- Step 1 -->
       <div class="mission card-step">
-        <img src="https://cdn-icons-png.flaticon.com/512/4727/4727263.png" alt="Step 1 Icon" style="width:80px; height:80px; margin-bottom: 10px;">
+        <img src="https://img.buzzfeed.com/store-an-image-prod-us-east-1/aspCebuu7.png?output-format=jpg&output-quality=auto" alt="Step 1 Icon" style="width:160px; height:160px; margin-bottom: 10px;">
         <h3 style="margin:10px 0 8px 0; font-size:1.3rem;">Step 1</h3>
         <p>Choose one successful person who inspires you.</p>
       </div>
       <!-- Step 2 -->
       <div class="mission card-step">
-        <img src="https://cdn-icons-png.flaticon.com/512/1903/1903162.png" alt="Step 2 Icon" style="width:80px; height:80px; margin-bottom: 10px;">
+        <img src="https://www.simplypsychology.org/wp-content/uploads/research-methods3.png" alt="Step 2 Icon" style="width:160px; height:160px; margin-bottom: 10px;">
         <h3 style="margin:10px 0 8px 0; font-size:1.3rem;">Step 2</h3>
         <p>Research their background, qualities, challenges, and achievements.</p>
       </div>
       <!-- Step 3 -->
       <div class="mission card-step">
-        <img src="https://cdn-icons-png.flaticon.com/512/892/892781.png" alt="Step 3 Icon" style="width:80px; height:80px; margin-bottom: 10px;">
+        <img src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:format(webp):quality(75)/master_plan_la_gi_1_2eb40125f8.png" alt="Step 3 Icon" style="width:160px; height:160px; margin-bottom: 10px;">
         <h3 style="margin:10px 0 8px 0; font-size:1.3rem;">Step 3</h3>
         <p>Organize your ideas in a digital mind map (Canva, Prezi, or Google Slides).</p>
       </div>
       <!-- Step 4 -->
       <div class="mission card-step">
-        <img src="https://cdn-icons-png.flaticon.com/512/1027/1027114.png" alt="Step 4 Icon" style="width:80px; height:80px; margin-bottom: 10px;">
+        <img src="https://lh3.googleusercontent.com/sitesv/AICyYda_rkPAcVMxhBz1ci60YKeA_Iw1nqUYhyHghdVIyt3ZKau1vL6AfDWKibP0qjcE36bpiWnKsBFEOXXSeFxUm_x2p8Qr51gsYwIPvIYWJ_qD2cKdGkOQhlMiSPscqTSoT5izh2ltaygrjQ1XxEYC-GD_TFOk-0EU7UQ-_nSiK2Zi57176gEUzDj-jrreWLniIZQO5zEN86V9f_GcEXcLFGqUBipw7TcsKqMwuKw=w1280" alt="Step 4 Icon" style="width:160px; height:160px; margin-bottom: 10px;">
         <h3 style="margin:10px 0 8px 0; font-size:1.3rem;">Step 4</h3>
         <p>Write a formal blog post (180–250 words) that:</p>
         <ul style="text-align:left; font-size:1.05rem; margin-top:8px; line-height:1.6; margin-bottom:0;">
@@ -600,7 +618,7 @@
       </a>
       <a href="leonardo-dicaprio.html" class="card">
         <div style="position:relative;">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/LeonardoDiCaprioNov08.jpg/250px-LeonardoDiCaprioNov08.jpg" alt="Leonardo DiCaprio">
+          <img src="https://lh3.googleusercontent.com/sitesv/AICyYdb2QMDzyQOcLVpyo_yKONFULofM8qwFNwBbelnLx9FYW0-93uWgmcJ3LhsCR7pIgF4o9HkAX58ncBMCA3d6vgPtWhbbGp626WUj3keuKbQQkZWszQ17o2U6DYdWn1ZqZY1bCLntlGv8U_5n0vmgM9YXh1VGSBsRyM0FS415wiXUFoh-DEJpG4Qe0TfokaQS_6vipu_cnioGwx8Dc6B830NdQ7NlL9EiIRo3mr4=w1280" alt="Leonardo DiCaprio">
           <div class="img-overlay"><span>By [Student Name]</span></div>
         </div>
         <div class="body">
@@ -610,7 +628,7 @@
       </a>
       <a href="vincent-van-gogh.html" class="card">
         <div style="position:relative;">
-          <img src="https://i.pinimg.com/736x/39/f4/71/39f471cb83c365437ac8b83921cc4cf5.jpg" alt="Vincent van Gogh">
+          <img src="https://lh3.googleusercontent.com/sitesv/AICyYdaIDzMX6f6uv7ONwtfJG_2CN8m0aXDW3ue29bMqjprDsWqZKjEDsNbUL43tpRwWAS1zvIXnGO7WCBKU1HPkHiHhqwqE4T3vdKN27DaTvwf6SbW9kipJ65XDzvVHvBd8mGBvtinRniUDFEkPyJeSMtLgxAlHI_8YqxCbJwY47tumNaUttiiQrlqhYILIq9k4yECBKhLU6bxY2GMj1wcntQnwXT2UT9Xom6Yg=w1280" alt="Vincent van Gogh">
           <div class="img-overlay"><span>By [Student Name]</span></div>
         </div>
         <div class="body">
@@ -693,132 +711,124 @@
       }
     });
     // -----------------------------
-    // Smart Blog Gallery Generator (No Sample Images)
+    // Smart Blog Gallery Generator (Student Editable Version)
     // -----------------------------
     const gallery = document.getElementById('galleryGrid');
     const totalCards = 27;
-  
+
     for (let i = 1; i <= totalCards; i++) {
       const card = document.createElement('div');
       card.className = 'card';
       const imgKey = `img-${i}`;
-      const personKey = `person-${i}`;
-      const studentKey = `student-${i}`;
+      const personInputKey = `famousPerson-${i}`;
+      const studentInputKey = `studentName-${i}`;
       let imgSrc = localStorage.getItem(imgKey) || '';
+      let famousPerson = localStorage.getItem(personInputKey) || '';
+      let studentName = localStorage.getItem(studentInputKey) || '';
       if (!imgSrc) {
         card.classList.add('placeholder');
       }
-      // Student name overlay for hover
-      let studentName = localStorage.getItem(studentKey) || 'By [Student Name]';
+
+      // Build card layout
       card.innerHTML = `
         <div style="position:relative;">
           <img src="${imgSrc}" alt="Famous Person" id="card-img-${i}">
-          <div class="img-overlay"><span>${studentName}</span></div>
+          <div class="img-overlay"><span>${studentName ? `By ${studentName}` : ''}</span></div>
         </div>
         <input type="file" accept="image/*" id="img-input-${i}">
         <button class="delete-image" id="delete-btn-${i}">Delete Image</button>
         <div class="body">
-          <h3 contenteditable="true" data-key="person-${i}">[Famous Person’s Name]</h3>
-          <p contenteditable="true" data-key="student-${i}">By [Student Name]</p>
+          <input type="text" id="person-input-${i}" placeholder="Enter famous person’s name"
+            value="${famousPerson}" style="
+            margin-top: 10px; 
+            padding: 8px 10px; 
+            width: 100%; 
+            border: 1.5px solid #ccc; 
+            border-radius: 8px; 
+            font-size: 1rem; 
+            background: #f9f9fc;">
+          <input type="text" id="name-input-${i}" placeholder="Enter your name"
+            value="${studentName}" style="
+            margin-top: 10px; 
+            padding: 8px 10px; 
+            width: 100%; 
+            border: 1.5px solid #ccc; 
+            border-radius: 8px; 
+            font-size: 1rem; 
+            background: #f9f9fc;">
         </div>
         <div class="overlay-edit"><span>✎ Edit</span></div>
       `;
       gallery.appendChild(card);
-    }
-  
-    // -----------------------------
-    // Local Storage Save / Load for Text
-    // -----------------------------
-    const editables = document.querySelectorAll('[contenteditable="true"]');
-    editables.forEach(el => {
-      const key = el.dataset.key;
-      const saved = localStorage.getItem(key);
-      if (saved) {
-        el.textContent = saved;
-      } else {
-        // If the text is the placeholder, focus automatically
-        if ((key.startsWith('person-') && el.textContent.trim() === '[Famous Person’s Name]') ||
-            (key.startsWith('student-') && el.textContent.trim() === 'By [Student Name]')) {
-          // Focus the first editable field for this card only once
-          // We'll focus the person name field only once per card
-          // To avoid focusing multiple fields at once, focus only the first matching element per card
-          // But here we focus all placeholders for simplicity
-          el.focus();
-        }
+
+      // Make the image area navigable to student_form.html
+      const imgElement = card.querySelector('img');
+      if (imgElement) {
+        imgElement.addEventListener('click', (e) => {
+          // Only navigate if the click is not from file input, text input, or delete button
+          // (Since the event is on the image, and file input, text input, and delete button are outside image, this is safe)
+          window.location.href = 'student_form.html';
+        });
       }
-  
-      el.addEventListener('input', () => {
-        localStorage.setItem(key, el.textContent);
-      });
-    });
-  
+
+      // Save Famous Person
+      const personInput = card.querySelector(`#person-input-${i}`);
+      if (personInput) {
+        personInput.addEventListener('input', (e) => {
+          const val = e.target.value.trim();
+          localStorage.setItem(personInputKey, val);
+        });
+      }
+
+      // Save Student Name
+      const nameInput = card.querySelector(`#name-input-${i}`);
+      if (nameInput) {
+        nameInput.addEventListener('input', (e) => {
+          const val = e.target.value.trim();
+          localStorage.setItem(studentInputKey, val);
+          const overlay = card.querySelector('.img-overlay span');
+          overlay.textContent = val ? `By ${val}` : '';
+        });
+      }
+    }
+
     // -----------------------------
     // Image Upload & Persistence per Card
     // -----------------------------
     for (let i = 1; i <= totalCards; i++) {
       const imgInput = document.getElementById(`img-input-${i}`);
       const imgElem = document.getElementById(`card-img-${i}`);
-      const deleteBtn = document.getElementById(`delete-btn-${i}`);
       const imgKey = `img-${i}`;
+      const deleteBtn = document.getElementById(`delete-btn-${i}`);
+
+      // Load saved image if exists
+      const savedImg = localStorage.getItem(imgKey);
+      if (savedImg) imgElem.src = savedImg;
+
+      // Handle new image upload
       if (imgInput && imgElem) {
         imgInput.addEventListener('change', (e) => {
           const file = e.target.files && e.target.files[0];
           if (file) {
             const reader = new FileReader();
-            reader.onload = function(evt) {
+            reader.onload = function (evt) {
               imgElem.src = evt.target.result;
               localStorage.setItem(imgKey, evt.target.result);
-              // Remove placeholder class if present
-              const cardDiv = imgElem.closest('.card');
-              if (cardDiv && cardDiv.classList.contains('placeholder')) {
-                cardDiv.classList.remove('placeholder');
-                cardDiv.removeEventListener('click', placeholderClickHandler);
-              }
             };
             reader.readAsDataURL(file);
           }
         });
       }
+
+      // Handle image delete
       if (deleteBtn && imgElem) {
         deleteBtn.addEventListener('click', () => {
           imgElem.src = '';
           localStorage.removeItem(imgKey);
-          // Also clear the file input value so user can upload again
-          if (imgInput) imgInput.value = '';
-          // Add placeholder class back and attach click handler
-          const cardDiv = imgElem.closest('.card');
-          if (cardDiv && !cardDiv.classList.contains('placeholder')) {
-            cardDiv.classList.add('placeholder');
-            cardDiv.addEventListener('click', placeholderClickHandler);
-          }
+          imgInput.value = '';
         });
       }
     }
-
-    // -----------------------------
-    // Redirect on Placeholder Click
-    // -----------------------------
-    function placeholderClickHandler(e) {
-      // Only trigger if click is on the image or card area, not on inputs or buttons
-      if (e.target.tagName.toLowerCase() === 'input' || e.target.tagName.toLowerCase() === 'button') {
-        return;
-      }
-      window.location.href = 'student_form.html';
-    }
-
-    // Attach click handlers to placeholder cards
-    document.querySelectorAll('.card.placeholder').forEach(card => {
-      card.addEventListener('click', placeholderClickHandler);
-    });
-
-    // Blog Gallery: update student name overlay on edit
-    document.querySelectorAll('.card .body p[data-key^="student-"]').forEach(function(p) {
-      p.addEventListener('input', function() {
-        const card = p.closest('.card');
-        const overlay = card.querySelector('.img-overlay span');
-        if (overlay) overlay.textContent = p.textContent || 'By [Student Name]';
-      });
-    });
   </script>
 
 </body>
