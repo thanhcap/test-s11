@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Voices of Success: Inspiring Lives, Powerful Stories</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #182642;
+      --gold: #D1A24A;
+      --light: #F9FAFB;
+      --gray: #6D758D;
+      --border: #E3E6EA;
+      --shadow: 0 2px 16px 0 rgba(24,38,66,0.08), 0 1.5px 4px rgba(0,0,0,0.03);
+      --radius: 16px;
+      --input-bg: #F5F7FA;
+      --input-border: #DDE2EB;
+      --input-focus: #D1A24A44;
+      --footer-bg: #1C283A;
+    }
+    html, body {
+      font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background: var(--light);
+      color: var(--navy);
+      letter-spacing: 0.01em;
+      font-size: 17px;
+      min-height: 100vh;
+    }
+    header {
+      background: white;
+      color: var(--navy);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 7%;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      box-shadow: 0 1px 8px rgba(24,38,66,0.03);
+    }
+    header h1 {
+      font-size: 1.55rem;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+    }
+    nav a {
+      color: var(--navy);
+      text-decoration: none;
+      margin-left: 32px;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 5px 0;
+      border-bottom: 2.5px solid transparent;
+      transition: color 0.2s, border-bottom 0.2s;
+      opacity: 0.93;
+    }
+    nav a:hover, nav a:focus {
+      color: var(--gold);
+      border-bottom: 2.5px solid var(--gold);
+      opacity: 1;
+    }
+    .hero {
+      background: linear-gradient(90deg,rgba(24,38,66,0.62) 0%,rgba(24,38,66,0.42) 100%), url('https://images.unsplash.com/photo-1497493292307-31c376b6e479?auto=format&fit=crop&w=1350&q=80') center/cover;
+      color: white;
+      text-align: center;
+      padding: 110px 18px 100px 18px;
+      border-radius: 0 0 var(--radius) var(--radius);
+      box-shadow: 0 4px 16px rgba(24,38,66,0.09);
+    }
+    .hero h2 {
+      font-size: 2.6rem;
+      margin-bottom: 14px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 16px rgba(24,38,66,0.13);
+    }
+    .hero p {
+      font-size: 1.22rem;
+      color: #f4f5f9;
+      opacity: 0.88;
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+    section {
+      padding: 56px 5%;
+      max-width: 1240px;
+      margin: auto;
+    }
+    h2 {
+      color: var(--navy);
+      border-left: 5px solid var(--gold);
+      padding-left: 15px;
+      font-size: 1.45rem;
+      font-weight: 600;
+      margin-bottom: 22px;
+      letter-spacing: 0.01em;
+    }
+    .mission {
+      background: #f6f7fa;
+      padding: 26px 28px;
+      border-left: 4px solid var(--gold);
+      margin-bottom: 40px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      font-size: 1.09rem;
+      color: var(--navy);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 32px;
+      margin-top: 18px;
+    }
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1.3px solid var(--border);
+      transition: transform .18s cubic-bezier(.33,.99,.56,1.01), box-shadow .18s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 370px;
+    }
+    .card:hover, .card:focus-within {
+      transform: translateY(-7px) scale(1.01);
+      box-shadow: 0 8px 28px 0 rgba(24,38,66,0.13), 0 2.5px 8px rgba(0,0,0,0.04);
+    }
+    .card img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      background: #e9ebef;
+      border-bottom: 1px solid var(--border);
+      display: block;
+      transition: filter 0.18s;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .card.placeholder img {
+      cursor: pointer;
+      filter: brightness(95%);
+      transition: filter 0.3s ease;
+    }
+    .card.placeholder img:hover {
+      filter: brightness(85%);
+    }
+    .card .body {
+      padding: 22px 18px 18px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .card h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 1.14rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      background: none;
+      border: none;
+      outline: none;
+      transition: background 0.16s;
+      min-height: 1.5em;
+    }
+    .card p {
+      color: var(--gray);
+      margin-top: 6px;
+      margin-bottom: 0;
+      font-size: 0.98rem;
+      background: none;
+      border: none;
+      outline: none;
+      min-height: 1.2em;
+      transition: background 0.16s;
+    }
+    .card input[type="file"] {
+      display: inline-block;
+      margin: 10px 0 0 0;
+      font-size: 0.98rem;
+      opacity: 0.85;
+      color: var(--navy);
+      vertical-align: middle;
+    }
+    .card button.delete-image {
+      display: inline-block;
+      margin-left: 10px;
+      margin-top: 10px;
+      padding: 4px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      background-color: var(--gold);
+      border: none;
+      border-radius: 6px;
+      color: var(--navy);
+      vertical-align: middle;
+      transition: background-color 0.2s;
+    }
+    .card button.delete-image:hover {
+      background-color: #b3882a;
+    }
+    /* Overlay edit effect */
+    .card .overlay-edit {
+      position: absolute;
+      inset: 0;
+      background: rgba(24,38,66,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.22s;
+      pointer-events: none;
+      z-index: 2;
+      font-size: 1.13rem;
+      font-weight: 500;
+      color: var(--navy);
+      letter-spacing: 0.05em;
+      border-radius: var(--radius);
+    }
+    .card:hover .overlay-edit,
+    .card:focus-within .overlay-edit {
+      opacity: 1;
+      pointer-events: none;
+    }
+    .card .overlay-edit span {
+      background: rgba(255,255,255,0.88);
+      padding: 7px 20px;
+      border-radius: 100px;
+      box-shadow: 0 1px 6px rgba(24,38,66,0.10);
+      color: var(--navy);
+    }
+    /* Editable content styles */
+    [contenteditable="true"] {
+      background: var(--input-bg);
+      border: 1.5px solid var(--input-border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      min-height: 1.5em;
+      outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+      box-shadow: 0 1px 3px rgba(24,38,66,0.04);
+      margin-bottom: 2px;
+      font-size: 1.08rem;
+    }
+    [contenteditable="true"]:focus {
+      border-color: var(--gold);
+      background: #fffbe9;
+      box-shadow: 0 0 0 2px var(--input-focus);
+    }
+    .faq {
+      background: #fff;
+      padding: 24px 28px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+      border: 1px solid var(--border);
+    }
+    footer {
+      background: var(--footer-bg);
+      color: #fff;
+      text-align: center;
+      padding: 28px 0 18px 0;
+      margin-top: 64px;
+      font-size: 1rem;
+      letter-spacing: 0.03em;
+      border-top: 1.5px solid var(--border);
+      box-shadow: 0 -2px 12px rgba(24,38,66,0.03);
+    }
+    @media (max-width: 700px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px 5%;
+      }
+      nav {
+        margin-top: 10px;
+        width: 100%;
+      }
+      nav a {
+        margin-left: 0;
+        margin-right: 18px;
+        display: inline-block;
+      }
+      .hero {
+        padding: 60px 8px 60px 8px;
+        font-size: 0.92rem;
+      }
+      section {
+        padding: 36px 3%;
+      }
+      .grid {
+        gap: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Voices of Success</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#gallery">Blog Gallery</a>
+      <a href="#about">About</a>
+      <a href="#faq">FAQ / Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <div class="hero" id="home">
+    <h2>Voices of Success: Inspiring Lives, Powerful Stories</h2>
+    <p>Theme: Success through Passion and Purpose</p>
+  </div>
+
+  <!-- Mission -->
+  <section>
+    <h2>Project Mission</h2>
+    <div class="mission">
+      <p>
+        Write a formal blog post about a successful person — this could be an athlete, leader, influencer, or artist — who has made a strong impact in their field or community.
+      </p>
+    </div>
+  </section>
+
+  <!-- Blog Gallery -->
+  <section id="gallery">
+    <h2>Blog Gallery</h2>
+    <div class="grid" id="galleryGrid">
+      <!-- Cards will be added via JS -->
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2>About the Project</h2>
+    <p><b>Mission:</b> To empower students to explore success through real-life stories, developing writing and analytical skills.</p>
+    <p><b>Progress:</b> 27 posts created by students celebrating passion and achievement.</p>
+    <p><b>Shared Vision:</b> Every story of success holds lessons worth learning and sharing.</p>
+    <p><b>Leadership:</b><br>Student Editor – [Your Name]<br>Instructor – [Teacher Name]</p>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq">
+      <b>What is the goal of the project?</b>
+      <p>To inspire students to write about influential people while improving formal writing.</p>
+    </div>
+    <div class="faq">
+      <b>How do I submit my post?</b>
+      <p>Submit it through your class’s Google Form or Google Site editor.</p>
+    </div>
+    <div class="faq">
+      <b>Can I write about anyone?</b>
+      <p>Yes, as long as the person inspires others and contributes positively.</p>
+    </div>
+    <div class="faq">
+      <b>Contact</b>
+      <p>Email your teacher at <a href="mailto:teacher@email.com">teacher@email.com</a></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 Voices of Success Project | All Rights Reserved
+  </footer>
+
+  <script>
+    // -----------------------------
+    // Smart Blog Gallery Generator (No Sample Images)
+    // -----------------------------
+    const gallery = document.getElementById('galleryGrid');
+    const totalCards = 27;
+  
+    for (let i = 1; i <= totalCards; i++) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      const imgKey = `img-${i}`;
+      const personKey = `person-${i}`;
+      const studentKey = `student-${i}`;
+      let imgSrc = localStorage.getItem(imgKey) || '';
+      if (!imgSrc) {
+        card.classList.add('placeholder');
+      }
+      card.innerHTML = `
+        <img src="${imgSrc}" alt="Famous Person" id="card-img-${i}">
+        <input type="file" accept="image/*" id="img-input-${i}">
+        <button class="delete-image" id="delete-btn-${i}">Delete Image</button>
+        <div class="body">
+          <h3 contenteditable="true" data-key="person-${i}">[Famous Person’s Name]</h3>
+          <p contenteditable="true" data-key="student-${i}">By [Student Name]</p>
+        </div>
+        <div class="overlay-edit"><span>✎ Edit</span></div>
+      `;
+      gallery.appendChild(card);
+    }
+  
+    // -----------------------------
+    // Local Storage Save / Load for Text
+    // -----------------------------
+    const editables = document.querySelectorAll('[contenteditable="true"]');
+    editables.forEach(el => {
+      const key = el.dataset.key;
+      const saved = localStorage.getItem(key);
+      if (saved) {
+        el.textContent = saved;
+      } else {
+        // If the text is the placeholder, focus automatically
+        if ((key.startsWith('person-') && el.textContent.trim() === '[Famous Person’s Name]') ||
+            (key.startsWith('student-') && el.textContent.trim() === 'By [Student Name]')) {
+          // Focus the first editable field for this card only once
+          // We'll focus the person name field only once per card
+          // To avoid focusing multiple fields at once, focus only the first matching element per card
+          // But here we focus all placeholders for simplicity
+          el.focus();
+        }
+      }
+  
+      el.addEventListener('input', () => {
+        localStorage.setItem(key, el.textContent);
+      });
+    });
+  
+    // -----------------------------
+    // Image Upload & Persistence per Card
+    // -----------------------------
+    for (let i = 1; i <= totalCards; i++) {
+      const imgInput = document.getElementById(`img-input-${i}`);
+      const imgElem = document.getElementById(`card-img-${i}`);
+      const deleteBtn = document.getElementById(`delete-btn-${i}`);
+      const imgKey = `img-${i}`;
+      if (imgInput && imgElem) {
+        imgInput.addEventListener('change', (e) => {
+          const file = e.target.files && e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+              imgElem.src = evt.target.result;
+              localStorage.setItem(imgKey, evt.target.result);
+              // Remove placeholder class if present
+              const cardDiv = imgElem.closest('.card');
+              if (cardDiv && cardDiv.classList.contains('placeholder')) {
+                cardDiv.classList.remove('placeholder');
+                cardDiv.removeEventListener('click', placeholderClickHandler);
+              }
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+      if (deleteBtn && imgElem) {
+        deleteBtn.addEventListener('click', () => {
+          imgElem.src = '';
+          localStorage.removeItem(imgKey);
+          // Also clear the file input value so user can upload again
+          if (imgInput) imgInput.value = '';
+          // Add placeholder class back and attach click handler
+          const cardDiv = imgElem.closest('.card');
+          if (cardDiv && !cardDiv.classList.contains('placeholder')) {
+            cardDiv.classList.add('placeholder');
+            cardDiv.addEventListener('click', placeholderClickHandler);
+          }
+        });
+      }
+    }
+
+    // -----------------------------
+    // Redirect on Placeholder Click
+    // -----------------------------
+    function placeholderClickHandler(e) {
+      // Only trigger if click is on the image or card area, not on inputs or buttons
+      if (e.target.tagName.toLowerCase() === 'input' || e.target.tagName.toLowerCase() === 'button') {
+        return;
+      }
+      window.location.href = 'student_form.html';
+    }
+
+    // Attach click handlers to placeholder cards
+    document.querySelectorAll('.card.placeholder').forEach(card => {
+      card.addEventListener('click', placeholderClickHandler);
+    });
+  </script>
+
+</body>
+</html>
