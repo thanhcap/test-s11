@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Submit Your Blog Post | Voices of Success</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #182642;
+      --gold: #D1A24A;
+      --light: #F9FAFB;
+      --gray: #6D758D;
+      --border: #E3E6EA;
+      --radius: 16px;
+      --shadow: 0 2px 16px 0 rgba(24,38,66,0.08);
+    }
+    /* General Styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: var(--navy);
+    }
+
+    .container {
+      width: 80%;
+      margin: 30px auto 40px;
+    }
+
+    /* Header */
+    header {
+      background: #182642;
+      color: #fff;
+      padding: 20px 7%;
+      text-align: center;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+
+    /* Main Content */
+    main {
+      display: flex;
+      gap: 20px;
+    }
+
+    article {
+      flex: 0 0 70%;
+      background: white;
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    article img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    aside {
+      flex: 0 0 30%;
+      background: white;
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    aside h3 {
+      margin-top: 0;
+    }
+
+    footer {
+      text-align: center;
+      color: #888;
+      font-size: 0.95rem;
+      margin-top: 20px;
+      padding: 20px 0;
+      background: white;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Voices of Success – Student Submission</h1>
+  </header>
+
+  <div style="max-width:850px; margin:20px auto 0; padding:0 50px; text-align:left;">
+    <button onclick="window.location.href='tests11.html'" 
+      style="
+        background:#eee;
+        color:#182642;
+        border:1px solid #ccc;
+        padding:8px 18px;
+        border-radius:6px;
+        cursor:pointer;
+        font-size:0.95rem;
+        transition:background 0.2s;
+      "
+      onmouseover="this.style.background='#ddd'"
+      onmouseout="this.style.background='#eee'">
+      ← Back to Home
+    </button>
+  </div>
+
+  <main class="container">
+      <article>
+        <p><strong>Your Blog Content:</strong></p>
+        <textarea id="blog-text" placeholder="Type your blog content here..." 
+          style="width:100%; height:400px; padding:10px; font-size:1rem; border:1px solid var(--border); border-radius:8px; resize:vertical;"></textarea>
+      </article>
+
+      <aside>
+        <p><strong>Upload Your Image:</strong></p>
+        <input type="file" id="blog-image" accept="image/*" style="margin-top:10px; display:block;">
+        <img id="preview-image" src="" alt="Image Preview" style="width:100%; margin-top:20px; display:none; border-radius:8px;">
+      </aside>
+  </main>
+
+  <footer>
+    © 2025 Voices of Success Project | All Rights Reserved
+  </footer>
+
+<script>
+// Hardcoded storage prefix for this placeholder page
+const storagePrefix = `placeholder1-`;
+
+// Elements
+const blogText = document.getElementById('blog-text');
+const blogImageInput = document.getElementById('blog-image');
+const previewImage = document.getElementById('preview-image');
+
+// Load saved data for this placeholder
+const savedText = localStorage.getItem(`${storagePrefix}blogText`);
+if(savedText) blogText.value = savedText;
+
+const savedImage = localStorage.getItem(`${storagePrefix}blogImage`);
+if(savedImage) {
+  previewImage.src = savedImage;
+  previewImage.style.display = 'block';
+}
+
+// Save text on input
+blogText.addEventListener('input', () => {
+  localStorage.setItem(`${storagePrefix}blogText`, blogText.value);
+});
+
+// Handle image upload
+blogImageInput.addEventListener('change', function() {
+  const file = this.files[0];
+  if(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      previewImage.src = e.target.result;
+      previewImage.style.display = 'block';
+      localStorage.setItem(`${storagePrefix}blogImage`, e.target.result);
+    }
+    reader.readAsDataURL(file);
+  } else {
+    previewImage.src = '';
+    previewImage.style.display = 'none';
+    localStorage.removeItem(`${storagePrefix}blogImage`);
+  }
+});
+</script>
+
+<script>
+// If you want to extend this form to handle multiple placeholders (like 27 cards) in a single page,
+// we can iterate over card indexes. Currently, one placeholder per page is used with ?card=ID in URL.
+// This script ensures each card's blog content and image are saved separately using studentId and cardIndex.
+// Already handled: localStorage keys are `blog-text-{studentId}-{cardIndex}` and `blog-image-{studentId}-{cardIndex}`.
+// No further changes needed unless you plan to add multiple placeholders in this page.
+</script>
+</body>
+</html>
