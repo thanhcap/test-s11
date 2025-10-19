@@ -26,8 +26,14 @@
     }
 
     .container {
-      width: 80%;
+      width: 90%;
       margin: 30px auto 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 20px;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding-right: 10px;
     }
 
     /* Header */
@@ -49,37 +55,43 @@
       margin-top: 10px;
     }
 
-    /* Main Content */
-    main {
+    /* Card Styles */
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       display: flex;
-      gap: 20px;
+      flex-direction: column;
+      height: 600px;
     }
 
-    article {
-      flex: 0 0 70%;
-      background: white;
-      padding: 20px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    article img {
+    .card textarea {
       width: 100%;
-      height: auto;
+      height: 300px;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid var(--border);
       border-radius: 8px;
-      margin: 20px 0;
+      resize: vertical;
+      margin-bottom: 15px;
+      flex-shrink: 0;
     }
 
-    aside {
-      flex: 0 0 30%;
-      background: white;
-      padding: 20px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+    .card input[type="file"] {
+      margin-top: 10px;
+      display: block;
+      flex-shrink: 0;
     }
 
-    aside h3 {
-      margin-top: 0;
+    .card img {
+      width: 100%;
+      margin-top: 15px;
+      border-radius: 8px;
+      flex-grow: 1;
+      object-fit: contain;
+      max-height: 200px;
+      display: none;
     }
 
     footer {
@@ -90,6 +102,137 @@
       padding: 20px 0;
       background: white;
       border-top: 1px solid var(--border);
+    }
+
+    /* Mini Padlet Styles */
+    #mini-padlet {
+      width: 90%;
+      max-width: 850px;
+      margin: 20px auto 40px;
+      background: white;
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    #mini-padlet h2 {
+      margin-top: 0;
+      color: var(--navy);
+    }
+
+    #padlet-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #padlet-form input[type="text"],
+    #padlet-form textarea {
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      resize: vertical;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    #padlet-form textarea {
+      height: 100px;
+    }
+
+    #padlet-form input[type="file"] {
+      margin-top: 5px;
+    }
+
+    #padlet-form button {
+      align-self: flex-start;
+      background: var(--gold);
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    #padlet-form button:hover {
+      background: #b2872f;
+    }
+
+    #notes-container {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 20px;
+      max-height: 60vh;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .note-card {
+      background: white;
+      padding: 20px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      max-height: 600px;
+      position: relative;
+    }
+
+    .note-card img {
+      width: 100%;
+      margin-top: 15px;
+      border-radius: 8px;
+      object-fit: contain;
+      max-height: 200px;
+      display: block;
+    }
+
+    .note-card button.delete-note {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #e74c3c;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+
+    .note-card button.delete-note:hover {
+      background: #c0392b;
+    }
+
+    .note-card p {
+      margin: 5px 0;
+      word-wrap: break-word;
+    }
+
+    .note-card .note-name {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--navy);
+    }
+
+    .note-card .note-famous {
+      font-style: italic;
+      color: var(--gray);
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    .note-card .note-content {
+      flex-grow: 1;
+      white-space: pre-wrap;
+      font-size: 1rem;
+      color: var(--navy);
     }
   </style>
 </head>
@@ -116,18 +259,22 @@
     </button>
   </div>
 
-  <main class="container">
-      <article>
-        <p><strong>Your Blog Content:</strong></p>
-        <textarea id="blog-text" placeholder="Type your blog content here..." 
-          style="width:100%; height:400px; padding:10px; font-size:1rem; border:1px solid var(--border); border-radius:8px; resize:vertical;"></textarea>
-      </article>
+  <section id="mini-padlet">
+    <h2>Mini Padlet</h2>
+    <form id="padlet-form">
+      <input type="text" id="student-name" placeholder="Your Name" required>
+      <input type="text" id="famous-name" placeholder="Famous Person's Name" required>
+      <textarea id="padlet-blog-content" placeholder="Enter blog content..." required></textarea>
+      <input type="file" id="padlet-image" accept="image/*">
+      <button type="submit">Add Note</button>
+    </form>
+    <div id="notes-container">
+      <!-- Notes will appear here -->
+    </div>
+  </section>
 
-      <aside>
-        <p><strong>Upload Your Image:</strong></p>
-        <input type="file" id="blog-image" accept="image/*" style="margin-top:10px; display:block;">
-        <img id="preview-image" src="" alt="Image Preview" style="width:100%; margin-top:20px; display:none; border-radius:8px;">
-      </aside>
+  <main class="container" id="placeholders-container">
+    <!-- Placeholder cards will be injected here -->
   </main>
 
   <footer>
@@ -135,46 +282,181 @@
   </footer>
 
 <script>
-// Hardcoded storage prefix for this placeholder page
-const storagePrefix = `placeholder1-`;
+// Mini Padlet functionality
+const padletForm = document.getElementById('padlet-form');
+const notesContainer = document.getElementById('notes-container');
+const studentNameInput = document.getElementById('student-name');
+const famousNameInput = document.getElementById('famous-name');
+const blogContentInput = document.getElementById('padlet-blog-content');
+const imageInput = document.getElementById('padlet-image');
 
-// Elements
-const blogText = document.getElementById('blog-text');
-const blogImageInput = document.getElementById('blog-image');
-const previewImage = document.getElementById('preview-image');
-
-// Load saved data for this placeholder
-const savedText = localStorage.getItem(`${storagePrefix}blogText`);
-if(savedText) blogText.value = savedText;
-
-const savedImage = localStorage.getItem(`${storagePrefix}blogImage`);
-if(savedImage) {
-  previewImage.src = savedImage;
-  previewImage.style.display = 'block';
+function getNotes() {
+  const notesJSON = localStorage.getItem('miniPadletNotes');
+  return notesJSON ? JSON.parse(notesJSON) : [];
 }
 
-// Save text on input
-blogText.addEventListener('input', () => {
-  localStorage.setItem(`${storagePrefix}blogText`, blogText.value);
-});
+function saveNotes(notes) {
+  localStorage.setItem('miniPadletNotes', JSON.stringify(notes));
+}
 
-// Handle image upload
-blogImageInput.addEventListener('change', function() {
-  const file = this.files[0];
+function createNoteCard(note, index) {
+  const card = document.createElement('div');
+  card.className = 'note-card';
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.className = 'delete-note';
+  deleteBtn.textContent = 'Delete';
+  deleteBtn.addEventListener('click', () => {
+    let notes = getNotes();
+    notes.splice(index, 1);
+    saveNotes(notes);
+    renderNotes();
+  });
+  card.appendChild(deleteBtn);
+
+  const nameP = document.createElement('p');
+  nameP.className = 'note-name';
+  nameP.textContent = note.studentName;
+  card.appendChild(nameP);
+
+  const famousP = document.createElement('p');
+  famousP.className = 'note-famous';
+  famousP.textContent = note.famousName;
+  card.appendChild(famousP);
+
+  const contentP = document.createElement('p');
+  contentP.className = 'note-content';
+  contentP.textContent = note.blogContent;
+  card.appendChild(contentP);
+
+  if(note.imageData) {
+    const img = document.createElement('img');
+    img.src = note.imageData;
+    img.alt = `Image for ${note.studentName}'s note`;
+    card.appendChild(img);
+  }
+
+  return card;
+}
+
+function renderNotes() {
+  notesContainer.innerHTML = '';
+  const notes = getNotes();
+  notes.forEach((note, index) => {
+    const card = createNoteCard(note, index);
+    notesContainer.appendChild(card);
+  });
+}
+
+padletForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const studentName = studentNameInput.value.trim();
+  const famousName = famousNameInput.value.trim();
+  const blogContent = blogContentInput.value.trim();
+
+  if(!studentName || !famousName || !blogContent) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+
+  const file = imageInput.files[0];
+
   if(file) {
     const reader = new FileReader();
-    reader.onload = function(e) {
-      previewImage.src = e.target.result;
-      previewImage.style.display = 'block';
-      localStorage.setItem(`${storagePrefix}blogImage`, e.target.result);
+    reader.onload = function(event) {
+      addNote(studentName, famousName, blogContent, event.target.result);
     }
     reader.readAsDataURL(file);
   } else {
-    previewImage.src = '';
-    previewImage.style.display = 'none';
-    localStorage.removeItem(`${storagePrefix}blogImage`);
+    addNote(studentName, famousName, blogContent, null);
   }
 });
+
+function addNote(studentName, famousName, blogContent, imageData) {
+  const notes = getNotes();
+  notes.push({ studentName, famousName, blogContent, imageData });
+  saveNotes(notes);
+  renderNotes();
+  padletForm.reset();
+}
+
+// Render notes on page load
+renderNotes();
+
+
+// Number of placeholders/cards
+const totalPlaceholders = 27;
+const container = document.getElementById('placeholders-container');
+
+for(let i = 1; i <= totalPlaceholders; i++) {
+  // Create card container
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  // Create label and textarea for blog content
+  const labelText = document.createElement('p');
+  labelText.innerHTML = `<strong>Your Blog Content (Placeholder ${i}):</strong>`;
+  card.appendChild(labelText);
+
+  const textarea = document.createElement('textarea');
+  textarea.id = `blog-text-${i}`;
+  textarea.placeholder = "Type your blog content here...";
+  card.appendChild(textarea);
+
+  // Create label and file input for image upload
+  const labelImage = document.createElement('p');
+  labelImage.style.marginTop = '15px';
+  labelImage.innerHTML = `<strong>Upload Your Image (Placeholder ${i}):</strong>`;
+  card.appendChild(labelImage);
+
+  const fileInput = document.createElement('input');
+  fileInput.type = 'file';
+  fileInput.accept = 'image/*';
+  fileInput.id = `blog-image-${i}`;
+  card.appendChild(fileInput);
+
+  // Create image preview element
+  const imgPreview = document.createElement('img');
+  imgPreview.id = `preview-image-${i}`;
+  imgPreview.alt = `Image Preview Placeholder ${i}`;
+  card.appendChild(imgPreview);
+
+  container.appendChild(card);
+
+  // Load saved data from localStorage
+  const savedText = localStorage.getItem(`placeholder${i}-blogText`);
+  if(savedText) textarea.value = savedText;
+
+  const savedImage = localStorage.getItem(`placeholder${i}-blogImage`);
+  if(savedImage) {
+    imgPreview.src = savedImage;
+    imgPreview.style.display = 'block';
+  }
+
+  // Save text on input
+  textarea.addEventListener('input', () => {
+    localStorage.setItem(`placeholder${i}-blogText`, textarea.value);
+  });
+
+  // Handle image upload
+  fileInput.addEventListener('change', function() {
+    const file = this.files[0];
+    if(file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        imgPreview.src = e.target.result;
+        imgPreview.style.display = 'block';
+        localStorage.setItem(`placeholder${i}-blogImage`, e.target.result);
+      }
+      reader.readAsDataURL(file);
+    } else {
+      imgPreview.src = '';
+      imgPreview.style.display = 'none';
+      localStorage.removeItem(`placeholder${i}-blogImage`);
+    }
+  });
+}
 </script>
 
 <script>
