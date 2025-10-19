@@ -273,10 +273,6 @@
     </div>
   </section>
 
-  <main class="container" id="placeholders-container">
-    <!-- Placeholder cards will be injected here -->
-  </main>
-
   <footer>
     © 2025 Voices of Success Project | All Rights Reserved
   </footer>
@@ -383,80 +379,6 @@ function addNote(studentName, famousName, blogContent, imageData) {
 
 // Render notes on page load
 renderNotes();
-
-
-// Number of placeholders/cards
-const totalPlaceholders = 27;
-const container = document.getElementById('placeholders-container');
-
-for(let i = 1; i <= totalPlaceholders; i++) {
-  // Create card container
-  const card = document.createElement('div');
-  card.className = 'card';
-
-  // Create label and textarea for blog content
-  const labelText = document.createElement('p');
-  labelText.innerHTML = `<strong>Your Blog Content (Placeholder ${i}):</strong>`;
-  card.appendChild(labelText);
-
-  const textarea = document.createElement('textarea');
-  textarea.id = `blog-text-${i}`;
-  textarea.placeholder = "Type your blog content here...";
-  card.appendChild(textarea);
-
-  // Create label and file input for image upload
-  const labelImage = document.createElement('p');
-  labelImage.style.marginTop = '15px';
-  labelImage.innerHTML = `<strong>Upload Your Image (Placeholder ${i}):</strong>`;
-  card.appendChild(labelImage);
-
-  const fileInput = document.createElement('input');
-  fileInput.type = 'file';
-  fileInput.accept = 'image/*';
-  fileInput.id = `blog-image-${i}`;
-  card.appendChild(fileInput);
-
-  // Create image preview element
-  const imgPreview = document.createElement('img');
-  imgPreview.id = `preview-image-${i}`;
-  imgPreview.alt = `Image Preview Placeholder ${i}`;
-  card.appendChild(imgPreview);
-
-  container.appendChild(card);
-
-  // Load saved data from localStorage
-  const savedText = localStorage.getItem(`placeholder${i}-blogText`);
-  if(savedText) textarea.value = savedText;
-
-  const savedImage = localStorage.getItem(`placeholder${i}-blogImage`);
-  if(savedImage) {
-    imgPreview.src = savedImage;
-    imgPreview.style.display = 'block';
-  }
-
-  // Save text on input
-  textarea.addEventListener('input', () => {
-    localStorage.setItem(`placeholder${i}-blogText`, textarea.value);
-  });
-
-  // Handle image upload
-  fileInput.addEventListener('change', function() {
-    const file = this.files[0];
-    if(file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        imgPreview.src = e.target.result;
-        imgPreview.style.display = 'block';
-        localStorage.setItem(`placeholder${i}-blogImage`, e.target.result);
-      }
-      reader.readAsDataURL(file);
-    } else {
-      imgPreview.src = '';
-      imgPreview.style.display = 'none';
-      localStorage.removeItem(`placeholder${i}-blogImage`);
-    }
-  });
-}
 </script>
 
 <script>
