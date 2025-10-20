@@ -723,5 +723,174 @@
     });
   </script>
 
+  <script>
+    // Step 5: Save & Load Gallery for all students
+    // This script enables saving and loading the Blog Gallery using localStorage.
+    // It allows students to add their own posts to the gallery and persists them across reloads.
+    (function() {
+      // Gallery container selector: the grid after "Blog Gallery" heading
+      function getGalleryGrid() {
+        const h2s = Array.from(document.querySelectorAll('h2'));
+        const galleryH2 = h2s.find(h => h.textContent.trim().toLowerCase().includes('blog gallery'));
+        if (!galleryH2) return null;
+        // Find next sibling grid
+        let el = galleryH2.nextElementSibling;
+        while (el && !(el.classList && el.classList.contains('grid'))) {
+          el = el.nextElementSibling;
+        }
+        return el;
+      }
+
+      // Key for localStorage
+      const STORAGE_KEY = 'blogGalleryPosts';
+
+      // Default posts (for reset and first load)
+      const defaultPosts = [
+        {
+          url: "carljung.html",
+          img: "https://media.nxbtrithuc.com.vn/avatar/image-20220216160924694.jpg",
+          alt: "Carl Jung",
+          name: "Carl Jung",
+          author: "[Student Name]"
+        },
+        {
+          url: "dicaprio.html",
+          img: "https://cdn.britannica.com/65/227665-050-D74A477E/American-actor-Leonardo-DiCaprio-2016.jpg",
+          alt: "Leonardo DiCaprio",
+          name: "Leonardo DiCaprio",
+          author: "[Student Name]"
+        },
+        {
+          url: "vangogh.html",
+          img: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_%28454045%29.jpg/250px-Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_%28454045%29.jpg",
+          alt: "Vincent van Gogh",
+          name: "Vincent van Gogh",
+          author: "[Student Name]"
+        }
+      ];
+
+      // Load posts from storage or use default
+      function loadPosts() {
+        let data = [];
+        try {
+          data = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        } catch (e) {
+          data = [];
+        }
+        if (!Array.isArray(data) || data.length === 0) {
+          data = defaultPosts.slice();
+        }
+        return data;
+      }
+
+      // Save posts to storage
+      function savePosts(posts) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+      }
+
+      // Render posts in the gallery
+      function renderGallery(posts) {
+        const grid = getGalleryGrid();
+        if (!grid) return;
+        grid.innerHTML = '';
+        posts.forEach((post, idx) => {
+          // Card element
+          const a = document.createElement('a');
+          a.href = post.url || "#";
+          a.className = "card";
+          a.target = "_blank";
+          a.rel = "noopener";
+          a.style.position = "relative";
+          a.innerHTML = `
+            <div style="position:relative;">
+              <img src="${post.img}" alt="${post.alt || ''}">
+              <div class="img-overlay"><span>By ${post.author}</span></div>
+            </div>
+            <div class="body">
+              <h3>${post.name}</h3>
+              <p>By ${post.author}</p>
+            </div>
+          `;
+          grid.appendChild(a);
+        });
+      }
+
+      // Add post form UI
+      function createAddPostForm(onAdd, onReset) {
+        const form = document.createElement('form');
+        form.style.display = 'flex';
+        form.style.flexWrap = 'wrap';
+        form.style.justifyContent = 'center';
+        form.style.alignItems = 'center';
+        form.style.gap = '14px';
+        form.style.margin = '22px 0 34px 0';
+        form.style.background = 'linear-gradient(90deg,#fffbe9 70%,#f3c96b11 100%)';
+        form.style.borderRadius = '18px';
+        form.style.boxShadow = '0 2px 12px 0 rgba(24,38,66,0.06)';
+        form.style.padding = '18px 12px 8px 12px';
+        form.innerHTML = `
+          <input type="text" name="name" placeholder="Person's Name" required style="flex:1 1 120px; min-width:120px; padding:7px 9px; border-radius:7px; border:1px solid #E3E6EA;">
+          <input type="text" name="author" placeholder="Your Name" required style="flex:1 1 110px; min-width:110px; padding:7px 9px; border-radius:7px; border:1px solid #E3E6EA;">
+          <input type="url" name="img" placeholder="Image URL" required style="flex:2 1 180px; min-width:180px; padding:7px 9px; border-radius:7px; border:1px solid #E3E6EA;">
+          <input type="url" name="url" placeholder="Blog Page URL" style="flex:2 1 160px; min-width:160px; padding:7px 9px; border-radius:7px; border:1px solid #E3E6EA;">
+          <button type="submit" style="background:linear-gradient(90deg,#F3C96B 80%,#FFD87A 100%); color:#192447; font-weight:700; border:none; border-radius:7px; padding:7px 18px; cursor:pointer;">Add to Gallery</button>
+          <button type="button" id="reset-gallery" style="background:#fff; color:#6D758D; font-weight:600; border:1.2px solid #E3E6EA; border-radius:7px; padding:7px 14px; cursor:pointer;">Reset Gallery</button>
+        `;
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const fd = new FormData(form);
+          const post = {
+            name: fd.get('name').trim(),
+            author: fd.get('author').trim(),
+            img: fd.get('img').trim(),
+            url: fd.get('url').trim() || "#",
+            alt: fd.get('name').trim()
+          };
+          if (!post.name || !post.author || !post.img) return;
+          onAdd(post);
+          form.reset();
+        });
+        form.querySelector('#reset-gallery').addEventListener('click', function() {
+          if (window.confirm("Reset the gallery to default posts?")) {
+            onReset();
+          }
+        });
+        return form;
+      }
+
+      // Main logic
+      function setupGallery() {
+        const grid = getGalleryGrid();
+        if (!grid) return;
+        // Insert form above the gallery grid
+        if (!document.getElementById('add-post-form')) {
+          const form = createAddPostForm(
+            function(post) {
+              const posts = loadPosts();
+              posts.push(post);
+              savePosts(posts);
+              renderGallery(posts);
+            },
+            function() {
+              savePosts(defaultPosts.slice());
+              renderGallery(defaultPosts);
+            }
+          );
+          form.id = 'add-post-form';
+          grid.parentNode.insertBefore(form, grid);
+        }
+        // Initial render
+        const posts = loadPosts();
+        renderGallery(posts);
+      }
+
+      // Run after DOMContentLoaded
+      if (document.readyState === "loading") {
+        document.addEventListener('DOMContentLoaded', setupGallery);
+      } else {
+        setupGallery();
+      }
+    })();
+  </script>
 </body>
 </html>
