@@ -278,7 +278,6 @@
   </footer>
 
 <script>
-// Mini Padlet functionality
 const padletForm = document.getElementById('padlet-form');
 const notesContainer = document.getElementById('notes-container');
 const studentNameInput = document.getElementById('student-name');
@@ -286,16 +285,18 @@ const famousNameInput = document.getElementById('famous-name');
 const blogContentInput = document.getElementById('padlet-blog-content');
 const imageInput = document.getElementById('padlet-image');
 
-function getNotes() {
-  const notesJSON = localStorage.getItem('miniPadletNotes');
-  return notesJSON ? JSON.parse(notesJSON) : [];
-}
-
-function saveNotes(notes) {
+function saveNoteLocally(note) {
+  let notes = JSON.parse(localStorage.getItem('miniPadletNotes') || '[]');
+  notes.push(note);
   localStorage.setItem('miniPadletNotes', JSON.stringify(notes));
 }
 
-function createNoteCard(note, index) {
+function loadNotes() {
+  const notes = JSON.parse(localStorage.getItem('miniPadletNotes') || '[]');
+  renderNotes(notes);
+}
+
+function createNoteCard(note) {
   const card = document.createElement('div');
   card.className = 'note-card';
 
@@ -303,10 +304,11 @@ function createNoteCard(note, index) {
   deleteBtn.className = 'delete-note';
   deleteBtn.textContent = 'Delete';
   deleteBtn.addEventListener('click', () => {
-    let notes = getNotes();
-    notes.splice(index, 1);
-    saveNotes(notes);
-    renderNotes();
+    if (!confirm('Are you sure you want to delete this note?')) return;
+    let notes = JSON.parse(localStorage.getItem('miniPadletNotes') || '[]');
+    notes = notes.filter(n => n.id !== note.id);
+    localStorage.setItem('miniPadletNotes', JSON.stringify(notes));
+    loadNotes();
   });
   card.appendChild(deleteBtn);
 
@@ -325,60 +327,59 @@ function createNoteCard(note, index) {
   contentP.textContent = note.blogContent;
   card.appendChild(contentP);
 
-  if(note.imageData) {
+  if (note.imageData) {
     const img = document.createElement('img');
     img.src = note.imageData;
     img.alt = `Image for ${note.studentName}'s note`;
     card.appendChild(img);
   }
-
   return card;
 }
 
-function renderNotes() {
+function renderNotes(notes) {
   notesContainer.innerHTML = '';
-  const notes = getNotes();
-  notes.forEach((note, index) => {
-    const card = createNoteCard(note, index);
+  notes.forEach(note => {
+    const card = createNoteCard(note);
     notesContainer.appendChild(card);
   });
 }
 
 padletForm.addEventListener('submit', function(e) {
   e.preventDefault();
-
   const studentName = studentNameInput.value.trim();
   const famousName = famousNameInput.value.trim();
   const blogContent = blogContentInput.value.trim();
-
-  if(!studentName || !famousName || !blogContent) {
+  if (!studentName || !famousName || !blogContent) {
     alert('Please fill in all required fields.');
     return;
   }
 
-  const file = imageInput.files[0];
+  const note = {
+    id: Date.now(),
+    studentName,
+    famousName,
+    blogContent
+  };
 
-  if(file) {
+  const file = imageInput.files[0];
+  if (file) {
     const reader = new FileReader();
-    reader.onload = function(event) {
-      addNote(studentName, famousName, blogContent, event.target.result);
+    reader.onload = function(evt) {
+      note.imageData = evt.target.result;
+      saveNoteLocally(note);
+      loadNotes();
+      padletForm.reset();
     }
     reader.readAsDataURL(file);
   } else {
-    addNote(studentName, famousName, blogContent, null);
+    saveNoteLocally(note);
+    loadNotes();
+    padletForm.reset();
   }
 });
 
-function addNote(studentName, famousName, blogContent, imageData) {
-  const notes = getNotes();
-  notes.push({ studentName, famousName, blogContent, imageData });
-  saveNotes(notes);
-  renderNotes();
-  padletForm.reset();
-}
-
-// Render notes on page load
-renderNotes();
+// Load notes on page load
+document.addEventListener('DOMContentLoaded', loadNotes);
 </script>
 
 <script>
