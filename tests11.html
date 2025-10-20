@@ -722,6 +722,48 @@
       }
     });
   </script>
+<script>
+  const gallery = document.getElementById('galleryGrid');
 
+  async function loadGallery() {
+    try {
+      const res = await fetch('/api/data');
+      const data = await res.json();
+      if (!Array.isArray(data)) return;
+      gallery.innerHTML = '';
+      data.forEach((p, i) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${p.img || 'https://picsum.photos/seed/' + i + '/600/400'}" alt="${p.person || 'Unknown'}">
+          <div class="body">
+            <h3 contenteditable="true" data-index="${i}" data-field="person">${p.person || ''}</h3>
+            <p contenteditable="true" data-index="${i}" data-field="student">${p.student || ''}</p>
+          </div>
+        `;
+        gallery.appendChild(card);
+      });
+    } catch (err) {
+      console.error('Error loading data:', err);
+    }
+  }
+
+  async function saveGallery() {
+    const cards = document.querySelectorAll('.card');
+    const data = Array.from(cards).map(card => ({
+      person: card.querySelector('h3').textContent,
+      student: card.querySelector('p').textContent,
+      img: card.querySelector('img').src
+    }));
+    await fetch('/api/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+  }
+
+  document.addEventListener('input', () => saveGallery());
+  window.addEventListener('load', loadGallery);
+</script>
 </body>
 </html>
