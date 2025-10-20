@@ -1,34 +1,28 @@
 import express from "express";
-import multer from "multer";
 import fs from "fs";
 import path from "path";
 
 const app = express();
 const __dirname = path.resolve();
 
-// Configure multer
-const upload = multer({ dest: "public/uploads/" });
-
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
-// Upload route
-app.post("/api/upload", upload.single("image"), (req, res) => {
-  res.json({ path: `/uploads/${req.file.filename}` });
-});
-
-// Save/load routes
-app.post("/api/save", (req, res) => {
-  fs.writeFileSync("placeholders.json", JSON.stringify(req.body, null, 2));
-  res.json({ message: "Data saved" });
-});
-
+// API endpoint to get saved data
 app.get("/api/data", (req, res) => {
-  if (fs.existsSync("placeholders.json")) {
-    res.sendFile(path.join(__dirname, "placeholders.json"));
+  const filePath = path.join(__dirname, "placeholders.json");
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
   } else {
-    res.json([]);
+    res.json([]);  // return empty array if file doesn't exist
   }
+});
+
+// API endpoint to save data
+app.post("/api/save", (req, res) => {
+  const filePath = path.join(__dirname, "placeholders.json");
+  fs.writeFileSync(filePath, JSON.stringify(req.body, null, 2));
+  res.json({ message: "Data saved" });
 });
 
 const PORT = process.env.PORT || 3000;
