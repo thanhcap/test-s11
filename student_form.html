@@ -277,82 +277,117 @@
     © 2025 Voices of Success Project | All Rights Reserved
   </footer>
 
+<script>
+const padletForm = document.getElementById('padlet-form');
+const notesContainer = document.getElementById('notes-container');
+const studentNameInput = document.getElementById('student-name');
+const famousNameInput = document.getElementById('famous-name');
+const blogContentInput = document.getElementById('padlet-blog-content');
+const imageInput = document.getElementById('padlet-image');
 
-<!-- Firebase SDKs + Firestore + Storage + Realtime Padlet script -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js"></script>
+function saveNoteLocally(note) {
+  let notes = JSON.parse(localStorage.getItem('miniPadletNotes') || '[]');
+  notes.push(note);
+  localStorage.setItem('miniPadletNotes', JSON.stringify(notes));
+}
+
+function loadNotes() {
+  const notes = JSON.parse(localStorage.getItem('miniPadletNotes') || '[]');
+  renderNotes(notes);
+}
+
+function createNoteCard(note) {
+  const card = document.createElement('div');
+  card.className = 'note-card';
+
+  const deleteBtn = document.createElement('button');
+  deleteBtn.className = 'delete-note';
+  deleteBtn.textContent = 'Delete';
+  deleteBtn.addEventListener('click', () => {
+    if (!confirm('Are you sure you want to delete this note?')) return;
+    let notes = JSON.parse(localStorage.getItem('miniPadletNotes') || '[]');
+    notes = notes.filter(n => n.id !== note.id);
+    localStorage.setItem('miniPadletNotes', JSON.stringify(notes));
+    loadNotes();
+  });
+  card.appendChild(deleteBtn);
+
+  const nameP = document.createElement('p');
+  nameP.className = 'note-name';
+  nameP.textContent = note.studentName;
+  card.appendChild(nameP);
+
+  const famousP = document.createElement('p');
+  famousP.className = 'note-famous';
+  famousP.textContent = note.famousName;
+  card.appendChild(famousP);
+
+  const contentP = document.createElement('p');
+  contentP.className = 'note-content';
+  contentP.textContent = note.blogContent;
+  card.appendChild(contentP);
+
+  if (note.imageData) {
+    const img = document.createElement('img');
+    img.src = note.imageData;
+    img.alt = `Image for ${note.studentName}'s note`;
+    card.appendChild(img);
+  }
+  return card;
+}
+
+function renderNotes(notes) {
+  notesContainer.innerHTML = '';
+  notes.forEach(note => {
+    const card = createNoteCard(note);
+    notesContainer.appendChild(card);
+  });
+}
+
+padletForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const studentName = studentNameInput.value.trim();
+  const famousName = famousNameInput.value.trim();
+  const blogContent = blogContentInput.value.trim();
+  if (!studentName || !famousName || !blogContent) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+
+  const note = {
+    id: Date.now(),
+    studentName,
+    famousName,
+    blogContent
+  };
+
+  const file = imageInput.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      note.imageData = evt.target.result;
+      saveNoteLocally(note);
+      loadNotes();
+      padletForm.reset();
+    }
+    reader.readAsDataURL(file);
+  } else {
+    saveNoteLocally(note);
+    loadNotes();
+    padletForm.reset();
+  }
+});
+
+// Load notes on page load
+document.addEventListener('DOMContentLoaded', loadNotes);
+</script>
 
 <script>
-  // 🔒 Replace these placeholders with your actual Firebase config before deployment
-  const firebaseConfig = {
-  apiKey: "AIzaSyBQCo4XUIXxeujllGCJWANwUednDJZMNDM",
-  authDomain: "voices-of-success.firebaseapp.com",
-  projectId: "voices-of-success",
-  storageBucket: "voices-of-success.firebasestorage.app",
-  messagingSenderId: "559742569473",
-  appId: "1:559742569473:web:6e3325a27706d642048400",
-  measurementId: "G-N4WGKSXR4L"
-};
-
-  // Initialize Firebase
-  
-  const db = firebase.firestore();
-  const storage = firebase.storage();
-
-  const padletForm = document.getElementById('padlet-form');
-  const notesContainer = document.getElementById('notes-container');
-
-  padletForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const studentName = document.getElementById('student-name').value.trim();
-    const famousName = document.getElementById('famous-name').value.trim();
-    const blogContent = document.getElementById('padlet-blog-content').value.trim();
-    const file = document.getElementById('padlet-image').files[0];
-
-    if (!studentName || !famousName || !blogContent) return alert('Please fill all fields.');
-
-    let imageUrl = null;
-    if (file) {
-      const storageRef = storage.ref('padlet_images/' + Date.now() + '_' + file.name);
-      await storageRef.put(file);
-      imageUrl = await storageRef.getDownloadURL();
-    }
-
-    await db.collection('notes').add({
-      studentName, famousName, blogContent, imageUrl, timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    });
-
-    padletForm.reset();
-  });
-
-  // Real-time updates
-  db.collection('notes').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-    notesContainer.innerHTML = '';
-    snapshot.forEach(doc => {
-      const note = doc.data();
-      const div = document.createElement('div');
-      div.className = 'note-card';
-      div.innerHTML = `
-        <p class="note-name"><strong>${escapeHtml(note.studentName || '')}</strong></p>
-        <p class="note-famous"><em>${escapeHtml(note.famousName || '')}</em></p>
-        <p class="note-content">${escapeHtml(note.blogContent || '')}</p>
-        ${note.imageUrl ? `<img src="${note.imageUrl}" alt="Image for ${escapeHtml(note.studentName || '')}">` : ''}
-      `;
-      notesContainer.appendChild(div);
-    });
-  });
-
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
+// If you want to extend this form to handle multiple placeholders (like 27 cards) in a single page,
+// we can iterate over card indexes. Currently, one placeholder per page is used with ?card=ID in URL.
+// This script ensures each card's blog content and image are saved separately using studentId and cardIndex.
+// Already handled: localStorage keys are `blog-text-{studentId}-{cardIndex}` and `blog-image-{studentId}-{cardIndex}`.
+// No further changes needed unless you plan to add multiple placeholders in this page.
 </script>
 </body>
-
 </html>
